@@ -40,10 +40,8 @@ function Login() {
     };    
 
     axios.post(`/auth/login`, credentials).then( res => {
-      console.log(res.headers["authentication"]);
       axios.defaults.headers.common["Authorization"] = res.headers["authentication"];
       localStorage.setItem("jwtToken", res.headers["authentication"]);
-      console.log(res.data.userData);
       localStorage.setItem("user", JSON.stringify(res.data.userData));
       navigate(`/profile`)
     }).catch(err => {

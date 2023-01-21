@@ -3,20 +3,37 @@ import {
   AlertTitle,
   Box,
   Button,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow,
   TextField,
   Typography,
 } from "@mui/material";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { fetcher } from "utils";
+import useSWR from "swr";
+import OrderRow from "./OrderRow";
 
 function Profile() {
+
   const [oldPassword, setOldPassword] = useState("");
   const [password, setPassword] = useState("");
   const [repeatedPassword, setRepeatedPassword] = useState("");
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
   const [isPasswordValid] = useState("Password invalid");
   const [errorMessage, setErrorMessage] = useState();
+
+  const { data, error, isLoading } = useSWR(
+    `${process.env.REACT_APP_URL}/users/${user.id}/orders`,
+    fetcher
+  );
 
   function handleLogout(event) {
     localStorage.clear();
@@ -103,6 +120,30 @@ function Profile() {
           </Button>
         </Link>
       </Box>
+
+      <Paper sx={{ width: '80%', overflow: 'hidden', margin:'0 auto' }}>
+      <Box>
+      <Table sx={{ margin: 4 }} size="small">
+        <TableHead>
+          <TableRow>
+            <TableCell />
+            <TableCell>ID</TableCell>
+            <TableCell>Items</TableCell>
+            <TableCell>Address</TableCell>
+            <TableCell>Creation Date</TableCell>
+            <TableCell>Price</TableCell>
+            <TableCell>Delivered</TableCell>
+            <TableCell>DeliveryDate</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {data?.map((item) => (
+            <OrderRow key={item.id} item={item} />
+          ))}
+        </TableBody>
+      </Table>
+    </Box>
+    </Paper>
     </>
   );
 }
