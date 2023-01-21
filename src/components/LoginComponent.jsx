@@ -12,7 +12,7 @@ import {
   Grid,
 } from "@mui/material";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import useSWR from "swr";
@@ -27,6 +27,7 @@ const theme = createTheme();
 function Login() {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -42,10 +43,7 @@ function Login() {
     localStorage.setItem("jwtToken", response.headers["authentication"]);
     console.log(response.data.userData);
     localStorage.setItem("user", JSON.stringify(response.data.userData));
-
-    // localStorage.setItem("currentUser", response.data.userData);
-    return (<Route path="*" element={<Navigate to="/profile" replace />} />
-    )
+    navigate(`/profile`);
   }
 
   return (
