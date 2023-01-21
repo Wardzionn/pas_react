@@ -105,6 +105,16 @@ function AddressForm({ user }) {
           />
         </Grid>
       </Grid>
+         {errorMessage && (
+          <Alert
+            severity="error"
+            onClose={() => {
+              setErrorMessage(null);
+            }}
+          >
+            <AlertTitle>Error</AlertTitle>
+            <strong>{errorMessage}</strong>
+          </Alert>)}
       <Button
         variant="contained"
         sx={{ mt: 3, mb: 2 }}
