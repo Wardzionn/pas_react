@@ -16,17 +16,15 @@ import axios from "axios";
 function ProductRow({ item }) {
   const [open, setOpen] = React.useState(false);
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
- 
 
   const handleAddToCart = () => {
-    console.log(item);
-    const body =  {
+    const body = {
       productId: item.id,
-      quantity: 1
-    }
+      quantity: 1,
+    };
 
-    axios.put(`/users/${user.id}/cart?productId=${item.id}&quantity=${1}`)
-  }
+    axios.put(`/users/${user.id}/cart?productId=${item.id}&quantity=${1}`);
+  };
 
   return (
     <>
