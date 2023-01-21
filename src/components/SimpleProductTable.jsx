@@ -4,14 +4,11 @@ import {
   TableRow,
   TableCell,
   TableBody,
-  Tab,
 } from "@mui/material";
 import CartRow from "components/CartRow";
 import React from "react";
 
 function SimpleProductTable({ data }) {
-  console.log(data);
-
   return (
     <Table sx={{ margin: 4 }} size="small">
       <TableHead>
@@ -28,13 +25,15 @@ function SimpleProductTable({ data }) {
         {data?.map((item) => (
           <CartRow item={item} />
         ))}
-        <TableRow >
-          <TableCell sx={{fontWeight: 700, fontSize: '1.2rem'}}>Total</TableCell>
+        <TableRow>
+          <TableCell sx={{ fontWeight: 700, fontSize: "1.2rem" }}>
+            Total
+          </TableCell>
           <TableCell />
           <TableCell />
           <TableCell />
           <TableCell />
-          <TableCell sx={{fontWeight: 700, fontSize: '1.2rem'}}>
+          <TableCell sx={{ fontWeight: 700, fontSize: "1.2rem" }}>
             {data?.reduce(
               (accumulator, currentValue) =>
                 accumulator +

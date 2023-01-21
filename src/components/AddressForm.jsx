@@ -104,18 +104,7 @@ function AddressForm({ user }) {
             onChange={(event) => setCountry(event.target.value)}
           />
         </Grid>
-      </Grid>{" "}
-      {errorMessage && (
-        <Alert
-          severity="error"
-          onClose={() => {
-            setErrorMessage(null);
-          }}
-        >
-          <AlertTitle>Error</AlertTitle>
-          <strong>{errorMessage}</strong>
-        </Alert>
-      )}
+      </Grid>
       <Button
         variant="contained"
         sx={{ mt: 3, mb: 2 }}
