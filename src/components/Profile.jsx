@@ -40,17 +40,22 @@ function Profile() {
   }
 
   function handlePasswordChange(event) {
-    const passwordChangeData = {
-      currentPassword: oldPassword,
-      newPassword: password,
-    };
-    axios
-      .put(`/users/${user.id}/changePassword`, passwordChangeData)
-      .then((res) => window.location.reload())
-      .catch((err) => {
-        setErrorMessage(err.response.data);
-      });
-  }
+     if (password !== repeatedPassword) {
+        alert("Passwords don't match");
+     } else {
+
+       const passwordChangeData = {
+         currentPassword: oldPassword,
+         newPassword: password,
+        };
+        axios
+        .put(`/users/${user.id}/changePassword`, passwordChangeData)
+        .then((res) => window.location.reload())
+        .catch((err) => {
+          setErrorMessage(err.response.data);
+        });
+      }
+    }
 
   return (
     <>
