@@ -33,12 +33,12 @@ function Login() {
     const credentials = {
       login,
       password,
-    };
+    };    
 
     const response = await axios.post(`/auth/login`, credentials);
     console.log(response.headers["authentication"]);
     axios.defaults.headers.common["Authorization"] =
-      response.headers["authentication"];
+    response.headers["authentication"];
     localStorage.setItem("jwtToken", response.headers["authentication"]);
     console.log(response.data.userData);
     localStorage.setItem("user", JSON.stringify(response.data.userData));
