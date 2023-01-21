@@ -10,6 +10,8 @@ import {
   Checkbox,
   Button,
   Grid,
+  Alert,
+  AlertTitle,
 } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -27,23 +29,26 @@ const theme = createTheme();
 function Login() {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState();
   const navigate = useNavigate();
 
-  async function handleSubmit(event) {
+  function handleSubmit(event) {
     event.preventDefault();
     const credentials = {
       login,
       password,
     };    
 
-    const response = await axios.post(`/auth/login`, credentials);
-    console.log(response.headers["authentication"]);
-    axios.defaults.headers.common["Authorization"] =
-    response.headers["authentication"];
-    localStorage.setItem("jwtToken", response.headers["authentication"]);
-    console.log(response.data.userData);
-    localStorage.setItem("user", JSON.stringify(response.data.userData));
-    navigate(`/profile`);
+    axios.post(`/auth/login`, credentials).then( res => {
+      console.log(res.headers["authentication"]);
+      axios.defaults.headers.common["Authorization"] = res.headers["authentication"];
+      localStorage.setItem("jwtToken", res.headers["authentication"]);
+      console.log(res.data.userData);
+      localStorage.setItem("user", JSON.stringify(res.data.userData));
+      navigate(`/profile`)
+    }).catch(err => {
+      setErrorMessage(err.response.data);
+    });
   }
 
   return (
@@ -58,6 +63,17 @@ function Login() {
             alignItems: "center",
           }}
         >
+          {errorMessage && (
+          <Alert
+            severity="error"
+            onClose={() => {
+              setErrorMessage(null);
+            }}
+          >
+            <AlertTitle>Error</AlertTitle>
+            <strong>{errorMessage}</strong>
+          </Alert>
+        )}
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
