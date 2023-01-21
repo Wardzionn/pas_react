@@ -46,7 +46,9 @@ function Header() {
           </Typography>
 
           <Link to="/products">
-            <Button color="inherit">Products</Button>
+          <Button variant="contained" sx={{ mt: 3, mb: 2 }}>
+        Products
+      </Button>
           </Link>
           <Box sx={{ flex: 13 }} />
           <Link to="/cart">

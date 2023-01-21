@@ -6,44 +6,27 @@ import {
   TableBody,
   Button,
 } from "@mui/material";
+import axios from "axios";
+import CartRow from "components/CartRow";
 import ProductRow from "components/ProductRow";
+import SimpleProductTable from "components/SimpleProductTable";
 import React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import useSWR from "swr";
-import { fetcher } from "utils";
+
+const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 function Cart() {
+  const [user] = useState(JSON.parse(localStorage.getItem("user")));
   const { data, error, isLoading } = useSWR(
-    `${process.env.REACT_APP_URL}/products`,
+    `${process.env.REACT_APP_URL}/users/${user.id}/cart`,
     fetcher
   );
 
   return (
     <>
-      <Table sx={{ margin: 4 }} size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell>Type</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Producer</TableCell>
-            <TableCell>ProductDescription</TableCell>
-            <TableCell>Price</TableCell>
-            <TableCell>Quantity</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data?.map((item) => (
-            <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
-              <TableCell>{item.type}</TableCell>
-              <TableCell>{item.name}</TableCell>
-              <TableCell>{item.producer}</TableCell>
-              <TableCell>{item.productDescription}</TableCell>
-              <TableCell>{item.price}</TableCell>
-              <TableCell>quantity</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+      <SimpleProductTable data={data?.["cartItems"]} />
       <Link to="/checkout">
         <Button variant="contained" sx={{ mt: 3, mb: 2 }}>
           Checkout

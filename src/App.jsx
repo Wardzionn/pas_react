@@ -16,8 +16,10 @@ import axios from "axios";
 function App() {
   useEffect(() => {
     axios.defaults.baseURL = `${process.env.REACT_APP_URL}`;
-    axios.defaults.headers.common['Authorization'] = localStorage.getItem("jwtToken");
+    console.log(axios.defaults.headers.common);
   }, []);
+  axios.defaults.headers.common["Authorization"] =
+    localStorage.getItem("jwtToken");
 
   return (
     <RecoilRoot>

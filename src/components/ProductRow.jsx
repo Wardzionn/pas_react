@@ -7,16 +7,30 @@ import {
   Typography,
   Table,
   TableBody,
+  Button,
 } from "@mui/material";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 
 function ProductRow({ item }) {
   const [open, setOpen] = React.useState(false);
+  const [user] = useState(JSON.parse(localStorage.getItem("user")));
+ 
+
+  const handleAddToCart = () => {
+    console.log(item);
+    const body =  {
+      productId: item.id,
+      quantity: 1
+    }
+
+    axios.put(`/users/${user.id}/cart?productId=${item.id}&quantity=${1}`)
+  }
 
   return (
     <>
-      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+      <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell>
           <IconButton
             aria-label="expand row"
@@ -92,6 +106,13 @@ function ProductRow({ item }) {
                   )}
                 </TableBody>
               </Table>
+              <Button
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                onClick={handleAddToCart}
+              >
+                Add to cart
+              </Button>
             </Box>
           </Collapse>
         </TableCell>
