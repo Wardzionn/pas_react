@@ -17,7 +17,6 @@ function App() {
   useEffect(() => {
     axios.defaults.baseURL = `${process.env.REACT_APP_URL}`;
     axios.defaults.headers.common['Authorization'] = localStorage.getItem("jwtToken");
-    console.log("app ", localStorage.getItem("jwtToken"))
   }, []);
 
   return (
