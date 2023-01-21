@@ -9,7 +9,10 @@ import {
   Menu,
   MenuItem,
 } from "@mui/material";
-import { Menu as MenuIcon } from "@mui/icons-material";
+import {
+  Person as ProfileIcon,
+  ShoppingCart as CartIcon,
+} from "@mui/icons-material";
 import { Link } from "react-router-dom";
 function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -21,42 +24,49 @@ function Header() {
     setAnchorEl(null);
   };
 
+  const profileIconButton = (
+    <IconButton
+      size="large"
+      edge="start"
+      color="inherit"
+      aria-label="menu"
+      sx={{ mr: 2 }}
+      onClick={handleClick}
+    >
+      <ProfileIcon />
+    </IconButton>
+  );
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-            onClick={handleClick}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Menu
-            id="basic-menu"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            MenuListProps={{
-              "aria-labelledby": "basic-button",
-            }}
-          >
-            <MenuItem onClick={handleClose} component={Link} to="/products">
-              Products
-            </MenuItem>
-            <MenuItem onClick={handleClose} component={Link} to="/user">
-              user
-            </MenuItem>
-          </Menu>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Shop
           </Typography>
-          <Link to="/login">
-            <Button color="inherit">Login</Button>
+
+          <Link to="/products">
+            <Button color="inherit">Products</Button>
           </Link>
+          <Box sx={{ flex: 13 }} />
+          <Link to="/cart">
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+              onClick={handleClick}
+            >
+              <CartIcon />
+            </IconButton>{" "}
+          </Link>
+          <Box sx={{ flex: 1 }} />
+          {localStorage.getItem("jwtToken") != undefined ? (
+            <Link to="/profile">{profileIconButton}</Link>
+          ) : (
+            <Link to="/login">{profileIconButton}</Link>
+          )}
         </Toolbar>
       </AppBar>
     </Box>

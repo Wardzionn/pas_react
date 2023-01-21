@@ -19,6 +19,8 @@ import useSWR from "swr";
 import { fetcher } from "utils";
 import axios from "axios";
 import { atom } from "recoil";
+import { Route, Routes, Navigate, BrowserRouter } from "react-router-dom";
+
 
 const theme = createTheme();
 
@@ -38,6 +40,8 @@ function Login() {
     axios.defaults.headers.common["Authorization"] =
       response.headers["authentication"];
     localStorage.setItem("jwtToken", response.headers["authentication"]);
+    return (        <Route path="*" element={<Navigate to="/profile" replace />} />
+    )
   }
 
   return (

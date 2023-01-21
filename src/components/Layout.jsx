@@ -7,6 +7,8 @@ import Footer from "./FooterComponent";
 import Products from "./ProductComponent";
 import UserDetails from "./UserDetailsComponent";
 import Login from "./LoginComponent";
+import Cart from "components/Cart";
+import Profile from "components/Profile";
 
 function Layout() {
   return (
@@ -16,6 +18,9 @@ function Layout() {
         <Route path="/products" element={<Products />} />
         <Route path="/user" element={<UserDetails />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/profile" element={<Profile />} />
+
 
         <Route path="*" element={<Navigate to="/products" replace />} />
       </Routes>
