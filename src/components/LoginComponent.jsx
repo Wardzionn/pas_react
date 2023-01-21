@@ -12,7 +12,7 @@ import {
   Grid,
 } from "@mui/material";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import useSWR from "swr";
@@ -22,26 +22,27 @@ import { atom } from "recoil";
 import { Route, Routes, Navigate, BrowserRouter } from "react-router-dom";
 
 
+
 const theme = createTheme();
 
 function Login() {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   async function handleSubmit(event) {
     event.preventDefault();
     const credentials = {
       login,
       password,
-    };
+    };    
 
     const response = await axios.post(`/auth/login`, credentials);
     console.log(response.headers["authentication"]);
     axios.defaults.headers.common["Authorization"] =
       response.headers["authentication"];
     localStorage.setItem("jwtToken", response.headers["authentication"]);
-    return (        <Route path="*" element={<Navigate to="/profile" replace />} />
-    )
+    navigate(`/profile`)
   }
 
   return (

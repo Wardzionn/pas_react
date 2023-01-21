@@ -9,6 +9,7 @@ import UserDetails from "./UserDetailsComponent";
 import Login from "./LoginComponent";
 import Cart from "components/Cart";
 import Profile from "components/Profile";
+import Checkout from "components/Checkout";
 
 function Layout() {
   return (
@@ -20,6 +21,7 @@ function Layout() {
         <Route path="/login" element={<Login />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/checkout" element={<Checkout />} />
 
 
         <Route path="*" element={<Navigate to="/products" replace />} />
