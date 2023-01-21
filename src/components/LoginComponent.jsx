@@ -40,7 +40,11 @@ function Login() {
     axios.defaults.headers.common["Authorization"] =
       response.headers["authentication"];
     localStorage.setItem("jwtToken", response.headers["authentication"]);
-    return (        <Route path="*" element={<Navigate to="/profile" replace />} />
+    console.log(response.data.userData);
+    localStorage.setItem("user", JSON.stringify(response.data.userData));
+
+    // localStorage.setItem("currentUser", response.data.userData);
+    return (<Route path="*" element={<Navigate to="/profile" replace />} />
     )
   }
 
